@@ -14,7 +14,11 @@
         <ui:composition>
             <p:menubar>
                 <p:menuitem value="Inicio" icon="ui-icon-home" url="index.xhtml"/>
-                <p:menuitem value="Tarjetas" icon="ui-icon-document" url="#"/>
+                <p:submenu label="Cliente" icon="ui-icon-person">
+                    <p:menuitem value="Registro" url="registroCliente.xhtml"></p:menuitem>
+                    <p:menuitem value="Listado" url="#"></p:menuitem>
+                    <p:menuitem value="Evaluaciones" url="#"></p:menuitem>
+                </p:submenu>
 
                 <p:menuitem value="Perfiles Tarjetas" icon="ui-icon-note" url="perfiles.xhtml"/>
 
