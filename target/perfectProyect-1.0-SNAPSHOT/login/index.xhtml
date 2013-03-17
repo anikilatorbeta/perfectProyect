@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+<head></head>
+<body>
+ 
+<c:if test="${param.state=='failure'}">
+        <c:set var="username" value="#{sessionScope.SPRING_SECURITY_LAST_USERNAME}"/>
+        <div class="ERROR">
+            Your login attempt was not successful, try again.<br />
+            Reason: #{sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}
+        </div>
+</c:if>
+    <form  action="#{request.contextPath}/j_spring_security_check" method="post">
+        <h:panelGrid columns="2" title="Customer">
+            <f:facet name="header"> 
+                <h:outputText value="Login form" />
+            </f:facet>
+            <h:outputText value="User:" />
+            <h:inputText id="j_username" value="#{username}"  />
+            <h:outputText value="Password:" />
+            <h:inputSecret id="j_password" />
+            <f:facet name="footer"> 
+                <h:commandButton  value="Login" type="submit"  />
+            </f:facet>
+        </h:panelGrid>
+    </form>
+</body>
+</html>
