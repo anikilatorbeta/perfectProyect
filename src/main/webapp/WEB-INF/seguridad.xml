@@ -1,32 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+             xmlns:beans="http://www.springframework.org/schema/beans" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <http auto-config="true">
-            <intercept-url pattern="/*" access="ROLE_ADMIN" />
-            <form-login login-page="/login/index.xhtml" authentication-failure-url="/login/index.xhtml" />
+        <intercept-url pattern="/*" access="ROLE_ADMIN" />
+        <form-login login-page="/login/index.xhtml" authentication-failure-url="/login/index.xhtml" default-target-url="/"/>
     </http>
     
-<!-- ================ OLD WAY ================================================== 
-    <authentication-manager>
+    <!-- ================ OLD WAY ================================================== 
+        <authentication-manager>
+            <authentication-provider>
+                <jdbc-user-service data-source-ref="mysqlDataSource" />
+            </authentication-provider>
+        </authentication-manager>
+    -->
+    <authentication-manager alias="authenticationManager">
         <authentication-provider>
-            <jdbc-user-service data-source-ref="mysqlDataSource" />
-        </authentication-provider>
+            <password-encoder hash="md5"/>
+		<jdbc-user-service data-source-ref="dataSource"
+		   users-by-username-query="select nombre clave estado from usuario where nombre=?" 
+		   authorities-by-username-query="select usuario, nombre from rol where usuario =?"/>
+	   </authentication-provider>
     </authentication-manager>
--->
-
-    <authentication-manager>
+    <!-- 
+    <beans:bean id="myUserDetailsService"
+                class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">  
+              
+        <beans:property name="dataSource" ref="dataSource"/>
+             <property name="enableGroups" value="true" />
+        <beans:property name="usersByUsernameQuery" value="select nombre clave estado from usuario where nombre=?"/>
+        <beans:property name="authoritiesByUsernameQuery" value="select usuario, nombre from rol where usuario =? "/>
+    </beans:bean>-->
+     
+    <beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <beans:property name="driverClassName" value="org.postgresql.Driver"></beans:property>
+        <beans:property name="url" value="jdbc:postgresql://postgres-perfectTest.jelastic.websolute.net.br/perfectdb"></beans:property>
+        <beans:property name="username" value="mastermaster"></beans:property>
+        <beans:property name="password" value="itlmnhnoc"></beans:property>
+           
+    </beans:bean>                
+    <!--  <authentication-manager>
             <authentication-provider>
                     <user-service>
-                            <user name="rexryan" password="jets" authorities="ROLE_ADMIN" />
+                            <user name="master" password="123" authorities="ROLE_ADMIN" />
                             <user name="djeter" password="17684514" authorities="ROLE_ADMIN" />
                     </user-service>
             </authentication-provider>
-    </authentication-manager>
+    </authentication-manager>-->
 
 </beans:beans>
