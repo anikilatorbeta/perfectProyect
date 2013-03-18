@@ -9,7 +9,7 @@
 
     <http auto-config="true">
         <intercept-url pattern="/*" access="ROLE_ADMIN" />
-        <form-login login-page="/login/index.xhtml" authentication-failure-url="/login/index.xhtml" default-target-url="/"/>
+ <!--       <form-login login-page="/login/index.xhtml" authentication-failure-url="/login/index.xhtml" default-target-url="/"/>-->
     </http>
     
     <!-- ================ OLD WAY ================================================== 
@@ -39,7 +39,7 @@
      
     <beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <beans:property name="driverClassName" value="org.postgresql.Driver"></beans:property>
-        <beans:property name="url" value="jdbc:postgresql://postgres-perfectTest.jelastic.websolute.net.br/perfectdb"></beans:property>
+        <beans:property name="url" value="jdbc:postgresql://postgres-perfectTest.jelastic.websolute.net/perfectdb"></beans:property>
         <beans:property name="username" value="mastermaster"></beans:property>
         <beans:property name="password" value="itlmnhnoc"></beans:property>
            
