@@ -35,10 +35,20 @@
 
 
                     <p:layoutUnit id="center" position="center" >
-                        <div align="center"><h2>BIENVENIDO AL SISTEMA DE ADMINISTRACION DE PERFECT TRAINING</h2>
+                        <div align="center"><h2>Registro de Cliente</h2>
                         </div>
                         
-                        
+                        <sec:authorize ifAllGranted="ROLE_ADMIN, ROLE_BAR">
+        Lorem ipsum dolor sit amet1
+    </sec:authorize>
+
+    <sec:authorize ifNotGranted="ROLE_ADMIN, ROLE_BAR">
+        Lorem ipsum dolor sit amet2
+    </sec:authorize>
+
+    <sec:authorize ifAnyGranted="ROLE_ADMIN, ROLE_BAR">
+        Lorem ipsum dolor sit amet3
+    </sec:authorize>
 
                     </p:layoutUnit>
 

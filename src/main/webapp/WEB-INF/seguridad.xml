@@ -9,6 +9,8 @@
 
     <http auto-config="true">
         <intercept-url pattern="/*" access="ROLE_ADMIN" />
+        <intercept-url pattern="/index.xhtml" access="ROLE_INDEX" />
+        <intercept-url pattern="/registroCliente.xhtml" access="ROLE_REGISTROCLIENTE" />
  <!--       <form-login login-page="/login/index.xhtml" authentication-failure-url="/login/index.xhtml" default-target-url="/"/>-->
     </http>
     
@@ -26,6 +28,8 @@
 		   users-by-username-query="select nombre, clave, estado from usuario where nombre=?" 
 		   authorities-by-username-query="select usuario, nombre from rol where usuario =?"/>
 	   </authentication-provider>
+           
+           
     </authentication-manager>
     <!-- 
     <beans:bean id="myUserDetailsService"
@@ -48,7 +52,7 @@
             <authentication-provider>
                     <user-service>
                             <user name="master" password="123" authorities="ROLE_ADMIN" />
-                            <user name="djeter" password="17684514" authorities="ROLE_ADMIN" />
+                            <user name="djeter" password="17684514" authoriti.es="ROLE_ADMIN" />
                     </user-service>
             </authentication-provider>
     </authentication-manager>-->
