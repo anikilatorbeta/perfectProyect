@@ -5,41 +5,29 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
-
     <h:body>
         <ui:composition>
             <p:menubar>
-                <p:menuitem value="Inicio" icon="ui-icon-home" url="index.xhtml"/>
-                <p:submenu label="Cliente" icon="ui-icon-person">
-                    <p:menuitem value="Registro" url="/modulos/cliente/registroCliente.xhtml"></p:menuitem>
-                    <p:menuitem value="Listado" url="#"></p:menuitem>
+                <base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/" />
+                <p:menuitem value="Inicio" icon="ui-icon-home" url="/index.xhtml"/>
+                <p:submenu label="Clientes" icon="ui-icon-person">
+                    <p:menuitem value="Listado" url="/modulos/cliente/clientes.xhtml"></p:menuitem>
                     <p:menuitem value="Evaluaciones" url="#"></p:menuitem>
                 </p:submenu>
-
                 <p:menuitem value="Perfiles Tarjetas" icon="ui-icon-note" url="perfiles.xhtml"/>
-
-                <p:menuitem value="Clientes" icon="ui-icon-person" url="#"/>
                 <p:menuitem value="Transacciones" icon="ui-icon-comment" url="#"/>
-
                 <p:menuitem value="Estadisticas" icon="ui-icon-image" url="#"/>
-
-
                 <p:menuitem value="Usuarios" icon="ui-icon-key" url="#"/>
                 <p:menuitem value="Salir" icon="ui-icon-key" url="/j_spring_security_logout"/>
                 <f:facet name="options">
-                  
                     <div style="margin-right:20px">
                     <p:clock pattern="HH:mm:ss dd-MM-yyyy" mode="server" /> 
                     </div>
-                   
                 </f:facet>
-
             </p:menubar>
         </ui:composition>
     </h:body>
-
 </html>

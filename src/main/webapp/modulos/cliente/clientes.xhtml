@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>Administracion de Perfect Training</title>
+        </f:facet>
+
+        <link type="text/css" rel="stylesheet" href="../../css/standart.css" />
+    </h:head>
+
+
+    <h:body>
+        <h:form>
+            <p:growl id="glow" showDetail="true"/>  
+            <p:layout fullPage="true" >
+
+                <p:layoutUnit id="top" position="north" size="50">
+
+                    <ui:include src="../../template/menu.xhtml"/>
+                </p:layoutUnit>
+
+                <p:layoutUnit id="bottom" position="south" size="60">
+                    <div align="center">Sistema de Administracion de Perfect Training 2013
+
+                        <img src="../../img/logofooter.png"/></div>
+                </p:layoutUnit>
+
+
+                <p:layoutUnit id="center" position="center" >
+                    <div align="center"><h2>Administracion de Clientes</h2>
+                    </div>
+                    <sec:authorize ifAnyGranted="ROLE_ADMIN, ROLE_CLIENTE_LISTAR">
+                        <sec:authorize ifAnyGranted="ROLE_ADMIN, ROLE_CLIENTE_ELIMINAR">
+                    <p:confirmDialog id="confirmDialogRemove" message="Esta Seguro de Eliminar este Perfil de Tarjeta" header="Eliminar Perfil" severity="alert" widgetVar="confirmDialogRemove" appendToBody="true">  
+                        <p:commandButton value="Si, Estoy Seguro" oncomplete="confirmDialogRemove.hide();" actionListener="#{listaDePerfiles.eliminarPerfil}" update="tarjetasTable,glow"/>  
+                        <p:commandButton value="No lo Estoy" onclick="confirmDialogRemove.hide();" type="button" />  
+                    </p:confirmDialog> 
+                        </sec:authorize>
+                    <p:dataTable var="perfi" value="#{listaDePerfiles.perfiles}" rowKey="#{perfilTarjeta.nombre}" paginator="true" rows="10" filteredValue="#{listaDePerfiles.perfilesFiltrado}" id="tarjetasTable" editable="true">
+                        <f:facet name="header">
+                            Listado de Clientes
+                        </f:facet>
+                        <p:ajax event="rowEdit" listener="#{listaDePerfiles.onEdit}" update=":form:glow,:form:tarjetasTable"  />  
+                        <p:ajax event="rowEditCancel" listener="#{listaDePerfiles.onCancel}" update=":form:glow"  />  
+
+                        <p:column headerText="Nombre" sortBy="#{perfi.nombre}" filterBy="#{perfi.nombre}" id="nombre">
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{perfi.nombre}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{perfi.nombre}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor> 
+                           
+                        </p:column>
+
+                        <p:column headerText="Precio Chileno" id="precioChileno" sortBy="#{perfi.precioChileno}" filterBy="#{perfi.precioChileno}">
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{perfi.precioChileno}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{perfi.precioChileno}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor> 
+
+                        </p:column>
+
+                        <p:column headerText="Precio US" id="precioUs" sortBy="#{perfi.precioUs}" filterBy="#{perfi.precioUs}">
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{perfi.precioUs}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{perfi.precioUs}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor> 
+                            
+                        </p:column>
+
+                        <p:column headerText="Detalle" id="detalle" sortBy="#{perfi.detalle}" filterBy="#{perfi.detalle}">
+                            <p:cellEditor>  
+                                <f:facet name="output">  
+                                    <h:outputText value="#{perfi.detalle}" />  
+                                </f:facet>  
+                                <f:facet name="input">  
+                                    <p:inputText value="#{perfi.detalle}" style="width:100%"/>  
+                                </f:facet>  
+                            </p:cellEditor> 
+                        </p:column>
+                        <p:column headerText="Opciones">  
+                            <p:rowEditor />  
+                            <p:commandLink onclick="confirmDialogRemove.show();" >
+                                <span class="ui-icon ui-icon-trash"/>
+                                <f:setPropertyActionListener value="#{perfi}" target="#{listaDePerfiles.tarjetaSelecionada}"/>
+                            </p:commandLink>
+                            
+                        </p:column>  
+                    </p:dataTable>
+                </sec:authorize>
+                    <sec:authorize ifAnyGranted="ROLE_ADMIN, ROLE_CLIENTE_REGISTRO">
+                    <p:commandButton value="Nuevo Cliente" id="btnNuevoCliente"  
+                                     icon="ui-icon-person" onclick="nuevoCliente.show();"/>  
+                    <p:dialog header="Nuevo Cliente" widgetVar="nuevoCliente" resizable="false" >
+                        <ui:include src="nuevoCliente.xhtml"/>
+                    </p:dialog>
+                    </sec:authorize>
+                    <sec:authorize ifAllGranted="ROLE_ADMIN, ROLE_BAR">
+                        Lorem ipsum dolor sit amet1
+                    </sec:authorize>
+
+                    <sec:authorize ifNotGranted="ROLE_ADMIN, ROLE_BAR">
+                        Lorem ipsum dolor sit amet2
+                    </sec:authorize>
+
+                    <sec:authorize ifAnyGranted="ROLE_ADMIN, ROLE_BAR">
+                        Lorem ipsum dolor sit amet3
+                    </sec:authorize>
+                </p:layoutUnit>
+
+            </p:layout>
+        </h:form>
+
+    </h:body>
+</html>

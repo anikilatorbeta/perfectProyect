@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </h:head>
+    <h:body>
+        <ui:composition>
+            <p:wizard widgetVar="wiz" nextLabel="Siguiente" backLabel="Anterior">
+                <p:tab id="personal" title="Personal">
+                    <p:panel header="Datalle Personal">
+                        <h:messages errorClass="error"/>
+                        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                            <h:outputText value="Nombre: *" />
+                            <p:inputText required="true" label="nombre"
+                                         value="#{index.cliente.nombre}"  requiredMessage="El Nombre es Campo Obligatorio"/>
+                            <h:outputText value="Apellido: *" />
+                            <p:inputText required="true" label="apellido"
+                                         value="#{index.cliente.apellido}" requiredMessage="El Apellido es Campo Obligatorio"/>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="address" title="Domicilio">
+                    <p:panel header="Detalles del Domicilio">
+                        <h:messages errorClass="error"/>
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Direccion: " />
+                            <p:inputText value="#{index.cliente.direccion}" />
+                            <h:outputText value="Numero: " />
+                            <p:inputText value="#{index.cliente.numero}" />
+                            <h:outputText value="Ciudad: " />
+                            <p:inputText value="#{index.cliente.ciudad}" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="contact" title="Contacto">
+                    <p:panel header="Informacion de Contacto">
+                        <h:messages errorClass="error"/>
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Email: *" />
+                            <p:inputText required="true" label="Email"
+                                         value="#{index.cliente.email}" requiredMessage="El Email es Campo Obligatorio" validatorMessage="Formato de Correo Incorrecto nombre@ejemplo.cl">
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                            </p:inputText>
+                            <h:outputText value="Telefono: " />
+                            <p:inputText value="#{index.cliente.telefono}"/>
+                            <h:outputText value="Informacion Adicional: " />
+                            <p:inputText value="#{index.cliente.info}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="tarjeta" title="Tarjeta" >
+                    <p:panel header="Detalle Tarjeta">
+                        <h:messages errorClass="error"/>  
+                        <p:selectOneRadio id="customRadio" value="#{index.cliente.perfil}" required="true" requiredMessage="Debe Selecionar una Tarjeta Para Continuar">  
+                            <f:selectItems value="#{index.items}"/>  
+                        </p:selectOneRadio> 
+                    </p:panel>
+                </p:tab>
+                <p:tab id="tipoDePago" title="Tipo de Pago">
+                    <p:panel header="Detalle Tipo de Pago">
+                        <h:messages errorClass="error"/>  
+                        <p:selectOneRadio id="customRadio2" value="#{index.cliente.metodoDePago}" layout="custom" required="true" requiredMessage="Debe Selecionar un Metodo de Pago para Continuar">
+                            <f:selectItem itemLabel="Pago Master" itemValue="Pago Master" />
+                            <f:selectItem itemLabel="PayPal" itemValue="Paypal" />
+                        </p:selectOneRadio>
+                        <h:panelGrid columns="3">
+                            <p:radioButton id="opt1" for="customRadio2" itemIndex="0"/>
+                            <h:outputLabel for="opt1" value="Pago Master" />
+                            <p:graphicImage  value="img/logoPagoMaster.png" />
+                            <p:radioButton id="opt2" for="customRadio2" itemIndex="1"/>
+                            <h:outputLabel for="opt2" value="PayPal" />
+                            <p:graphicImage  value="img/logoPayPal.png" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="confirm" title="Confirmacion">
+                    <p:panel header="Confirmacion de Datos">
+                        <h:panelGrid id="confirmation" columns="2">
+                            <h:outputText value="Nombre: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.nombre}" />
+                            <h:outputText value="Apellido: " />
+                            <h:outputText  styleClass="outputLabel"
+                                           value="#{index.cliente.apellido}"/>
+                            <h:outputText value="Direccion: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.direccion}" />
+                            <h:outputText value="Numero: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.numero}" />
+                            <h:outputText value="Ciudad: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.ciudad}" />
+                            <h:outputText value="Email: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.email}" />
+                            <h:outputText value="Telefono: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.telefono}"/>
+                            <h:outputText value="Informacion Adicional: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.info}" />
+                            <h:outputText value="Tarjeta: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.perfil}"/>
+                            <h:outputText value="Metodo de Pago: " />
+                            <h:outputText styleClass="outputLabel"
+                                          value="#{index.cliente.metodoDePago}"/>
+                            <h:outputText />
+                            <h:outputText />
+                        </h:panelGrid>
+                        <p:commandButton value="Pagar" update="growl" 
+                                         actionListener="#{index.save}"/>
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
+        </ui:composition>
+    </h:body>
+</html>
